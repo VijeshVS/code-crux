@@ -1,51 +1,44 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Clock, Box, MoonIcon, SunIcon } from "lucide-react";
-import { analyze } from "@/app/actions/analyze";
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Textarea } from '@/components/ui/textarea'
+import { Clock, Box, MoonIcon, SunIcon } from 'lucide-react'
 
 export default function ComplexityAnalyzer() {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('')
   const [analysis, setAnalysis] = useState<{
-    time: string;
-    timeExplanation: string;
-    space: string;
-    spaceExplanation: string;
-  } | null>(null);
-  const [isDark, setIsDark] = useState(false);
+    time: string
+    timeExplanation: string
+    space: string
+    spaceExplanation: string
+  } | null>(null)
+  const [isDark, setIsDark] = useState(false)
 
-  const analyzeCode = async () => {
-    analyze(code).then((res) => {
-      setAnalysis(res);
-    });
-  };
+  const analyzeCode = () => {
+    // This is a mock analysis - in a real app, you'd have more sophisticated analysis
+    setAnalysis({
+      time: 'O(n²)',
+      timeExplanation: 'The nested loops in your code result in quadratic time complexity as it needs to iterate through the array twice.',
+      space: 'O(n)',
+      spaceExplanation: 'The space complexity is linear as the algorithm stores an array proportional to the input size.',
+    })
+  }
 
   const toggleDark = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark");
-  };
+    setIsDark(!isDark)
+    document.documentElement.classList.toggle('dark')
+  }
 
   return (
-    <div
-      className={`min-h-screen p-4 md:p-8 transition-colors ${
-        isDark ? "dark" : ""
-      }`}
-    >
+    <div className={`min-h-screen p-4 md:p-8 transition-colors ${isDark ? 'dark' : ''}`}>
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl md:text-3xl font-bold">
-            Code Complexity Analyzer
-          </h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Code Complexity Analyzer</h1>
           <Button variant="ghost" size="icon" onClick={toggleDark}>
-            {isDark ? (
-              <SunIcon className="h-5 w-5" />
-            ) : (
-              <MoonIcon className="h-5 w-5" />
-            )}
+            {isDark ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
           </Button>
         </div>
 
@@ -61,8 +54,8 @@ export default function ComplexityAnalyzer() {
               placeholder="Paste your code here..."
               className="font-mono min-h-[200px] md:min-h-[300px]"
             />
-            <Button
-              className="mt-4 w-full md:w-auto"
+            <Button 
+              className="mt-4 w-full md:w-auto" 
               onClick={analyzeCode}
               disabled={!code.trim()}
             >
@@ -83,12 +76,8 @@ export default function ComplexityAnalyzer() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-mono font-bold mb-2">
-                  {analysis.time}
-                </div>
-                <p className="text-muted-foreground">
-                  {analysis.timeExplanation}
-                </p>
+                <div className="text-3xl font-mono font-bold mb-2">{analysis.time}</div>
+                <p className="text-muted-foreground">{analysis.timeExplanation}</p>
               </CardContent>
             </Card>
 
@@ -101,17 +90,14 @@ export default function ComplexityAnalyzer() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-mono font-bold mb-2">
-                  {analysis.space}
-                </div>
-                <p className="text-muted-foreground">
-                  {analysis.spaceExplanation}
-                </p>
+                <div className="text-3xl font-mono font-bold mb-2">{analysis.space}</div>
+                <p className="text-muted-foreground">{analysis.spaceExplanation}</p>
               </CardContent>
             </Card>
           </div>
         )}
       </div>
     </div>
-  );
+  )
 }
+
