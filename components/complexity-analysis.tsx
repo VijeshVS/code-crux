@@ -13,7 +13,7 @@ type AnalysisStep = {
 type Analysis = {
   final_time_complexity: string;
   time_steps: AnalysisStep[];
-  final_time_complexity_explanation: string;
+  final_time_complexity_explaination: string;
   final_space_complexity: string;
   space_steps: AnalysisStep[];
   final_space_complexity_explanation: string;
@@ -75,7 +75,7 @@ export function ComplexityAnalysis({ analysis }: AnalysisProps) {
             <div className="p-6">
               <h4 className="font-semibold">Final Explanation</h4>
               <p className="text-muted-foreground">
-                {analysis.final_time_complexity_explanation}
+                {analysis.final_time_complexity_explaination}
               </p>
             </div>
           </div>
