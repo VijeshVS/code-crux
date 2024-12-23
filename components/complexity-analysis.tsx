@@ -17,6 +17,8 @@ type Analysis = {
   final_space_complexity: string;
   space_steps: AnalysisStep[];
   final_space_complexity_explanation: string;
+  space_complexity_curve_type: string,
+  time_complexity_curve_type: string,
 };
 
 interface AnalysisProps {
@@ -42,6 +44,9 @@ export function ComplexityAnalysis({ analysis }: AnalysisProps) {
               </h3>
               <p className="text-sm text-muted-foreground">
                 Final Time Complexity
+              </p>
+              <p className="text-base font-semibold text-muted-foreground">
+                Curve : {analysis.time_complexity_curve_type}
               </p>
             </div>
             <Separator />
@@ -93,6 +98,9 @@ export function ComplexityAnalysis({ analysis }: AnalysisProps) {
               </h3>
               <p className="text-sm text-muted-foreground">
                 Final Space Complexity
+              </p>
+              <p className="text-base font-semibold text-muted-foreground">
+                Curve : {analysis.space_complexity_curve_type}
               </p>
             </div>
             <Separator />
