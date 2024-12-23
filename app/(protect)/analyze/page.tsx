@@ -7,7 +7,7 @@ import { CodeEditor } from "@/components/code-editor";
 import { ComplexityAnalysis } from "@/components/complexity-analysis";
 import { MoonIcon, SunIcon } from "lucide-react";
 import Link from "next/link";
-import { getDetails } from "../actions/analyze";
+import { getDetails } from "../../actions/analyze";
 
 export default function AnalyzerPage() {
   const [code, setCode] = useState("");
@@ -19,7 +19,7 @@ export default function AnalyzerPage() {
   const performAnalysis = async () => {
     setAnalysis("checking!!")
     setLoading(true);
-    getDetails(code).then((res) => {
+    getDetails(code,localStorage.getItem('API_KEY') || "").then((res) => {
       setAnalysis(res);
       setLoading(false);
     });
@@ -51,7 +51,7 @@ export default function AnalyzerPage() {
             >
               ← Back
             </Link>
-            <h1 className="text-2xl md:text-2xl font-bold">
+            <h1 className="text-lg md:text-xl font-bold">
               Advanced Complexity Analyzer
             </h1>
           </div>
