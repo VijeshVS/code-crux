@@ -12,7 +12,7 @@ export function CodeEditor({ value, onChange, height = "400px" }: CodeEditorProp
   return (
     <Editor
       height={height}
-      defaultLanguage="javascript"
+      defaultLanguage="cpp"
       theme="vs-dark"
       value={value}
       onChange={(value) => onChange(value || '')}
