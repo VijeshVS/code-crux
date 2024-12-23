@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import type { CodeAnalysis } from "@/types/analysis";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import { getHistory } from "../../actions/analyze";
 
 export default function CodeAnalyzerPage() {
   const [code, setCode] = useState("");
@@ -29,49 +29,9 @@ export default function CodeAnalyzerPage() {
   const analyzeCode = async () => {
     setIsAnalyzing(true);
     // Mock analysis - in a real implementation, this would call an API
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
+    const res = await getHistory(code, localStorage.getItem("API_KEY") || "");
     // Example analysis result
-    setAnalysis({
-      topic: "dynamic-programming",
-      category: "Algorithm",
-      description:
-        "This code implements the Fibonacci sequence using dynamic programming.",
-      timeComplexity: "O(n)",
-      spaceComplexity: "O(n)",
-      steps: [
-        {
-          lineNumbers: [1, 3],
-          code: "function fibonacci(n) {\n  const dp = new Array(n + 1).fill(0);",
-          explanation:
-            "Initialize a dynamic programming array to store Fibonacci numbers. This allows us to avoid redundant calculations.",
-        },
-        {
-          lineNumbers: [4, 6],
-          code: "  dp[1] = 1;\n  dp[2] = 1;",
-          explanation:
-            "Set the base cases for the Fibonacci sequence. The first two numbers are 1.",
-        },
-        {
-          lineNumbers: [7, 10],
-          code: "  for(let i = 3; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }",
-          explanation:
-            "Iteratively calculate each Fibonacci number using the previous two numbers in the sequence.",
-        },
-      ],
-      optimizations: [
-        {
-          title: "Space Optimization",
-          description:
-            "We can optimize the space complexity by only storing the last two numbers instead of the entire array.",
-          currentCode:
-            "const dp = new Array(n + 1).fill(0);\nfor(let i = 3; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
-          suggestedCode:
-            "let prev2 = 1, prev1 = 1;\nfor(let i = 3; i <= n; i++) {\n  const curr = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = curr;\n}",
-          improvement: "Reduces space complexity from O(n) to O(1)",
-        },
-      ],
-    });
+    setAnalysis(res);
     setIsAnalyzing(false);
     setActiveTab("analysis");
   };

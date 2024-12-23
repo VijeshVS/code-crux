@@ -1,7 +1,6 @@
 "use server";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
 export async function getDetails(code: string, API_KEY: string) {
   const genAI = new GoogleGenerativeAI(API_KEY || "");
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -29,6 +28,42 @@ export async function getDetails(code: string, API_KEY: string) {
                     }
                     Please analyze the code carefully and come to conclusion. Don't give the time or space complexity of optimized/better code. Just give results for current code given to you.
                     IMPORTANT: Don't suggest the ways to optimize code. Just be concerned with the code given to you and analyze it.
+                    IMPORTANT: Do not provide any extra or unnecessary details/information
+                    IMPORTANT: Response should be in normal text. Don't bold italic etc
+                    IMPORTANT: If something other than code is given. Return invalid for all keys`;
+
+  const result = await model.generateContent([prompt]);
+  const json = result.response.text();
+  const analysis = JSON.parse(json.slice(7, -4));
+  return analysis;
+}
+
+export async function getHistory(code: string, API_KEY: string) {
+  const genAI = new GoogleGenerativeAI(API_KEY || "");
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+  const prompt = `You are given with a code : ${code}. Your job is to analyze the code and give the details of the program in the mentioned format.
+                    IMPORTANT: Return result in below format in form of stringified JSON
+                    {  
+                      topic: string
+                      category: string
+                      description: string
+                      timeComplexity: string
+                      spaceComplexity: string
+                      steps: {
+                              lineNumbers: [number, number]
+                              code: string
+                              explanation: string
+                       }[]
+                      optimizations: {
+                            title: string
+                            description: string
+                            currentCode: string
+                            suggestedCode: string
+                            improvement: string
+                       }[]
+                    } 
+                    Please analyze the code carefully and come to conclusion.
                     IMPORTANT: Do not provide any extra or unnecessary details/information
                     IMPORTANT: Response should be in normal text. Don't bold italic etc
                     IMPORTANT: If something other than code is given. Return invalid for all keys`;
