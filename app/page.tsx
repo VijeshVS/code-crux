@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Code2, GitCompare, Microscope } from 'lucide-react'
+import { ArrowRight, Code2, Microscope } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -10,27 +10,18 @@ export default function Home() {
         <p className="text-muted-foreground max-w-md mx-auto">
           Analyze, compare, and understand the complexity of your code with detailed explanations.
         </p>
-        <div className="grid gap-4 md:grid-cols-3">
-          <Button asChild className="group" variant="outline" size="lg">
-            <Link href="/analyze" className="flex items-center justify-between">
+        <div className="grid gap-4 md:grid-cols-2 sm:grid-cols-1">
+          <Button asChild className="group flex items-center justify-between gap-2" variant="outline" size="lg">
+            <Link href="/analyze" className="w-full flex items-center justify-between px-4">
               <div className="flex items-center gap-2">
                 <Microscope className="h-5 w-5" />
-                <span>Analyze Code</span>
+                <span>Code Complexity</span>
               </div>
               <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           </Button>
-          <Button asChild className="group" variant="outline" size="lg">
-            <Link href="/compare" className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <GitCompare className="h-5 w-5" />
-                <span>Compare Code</span>
-              </div>
-              <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
-          </Button>
-          <Button asChild className="group" variant="outline" size="lg">
-            <Link href="/code-analyzer" className="flex items-center justify-between">
+          <Button asChild className="group flex items-center justify-between gap-2" variant="outline" size="lg">
+            <Link href="/code-analyzer" className="w-full flex items-center justify-between px-4">
               <div className="flex items-center gap-2">
                 <Code2 className="h-5 w-5" />
                 <span>Code Analyzer</span>
@@ -43,4 +34,3 @@ export default function Home() {
     </div>
   )
 }
-

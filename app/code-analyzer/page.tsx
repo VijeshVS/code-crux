@@ -1,80 +1,94 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { CodeEditor } from '@/components/code-editor'
-import { TopicBadge } from '@/components/topic-badge'
-import { MoonIcon, SunIcon, Loader2, ArrowLeft, Code2, LineChart } from 'lucide-react'
-import type { CodeAnalysis } from '@/types/analysis'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Separator } from '@/components/ui/separator'
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CodeEditor } from "@/components/code-editor";
+import { TopicBadge } from "@/components/topic-badge";
+import {
+  MoonIcon,
+  SunIcon,
+  Loader2,
+  ArrowLeft,
+  Code2,
+  LineChart,
+} from "lucide-react";
+import type { CodeAnalysis } from "@/types/analysis";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 export default function CodeAnalyzerPage() {
-  const [code, setCode] = useState('')
-  const [analysis, setAnalysis] = useState<CodeAnalysis | null>(null)
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [isDark, setIsDark] = useState(false)
-  const [activeTab, setActiveTab] = useState('code')
+  const [code, setCode] = useState("");
+  const [analysis, setAnalysis] = useState<CodeAnalysis | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+  const [activeTab, setActiveTab] = useState("code");
 
   const analyzeCode = async () => {
-    setIsAnalyzing(true)
+    setIsAnalyzing(true);
     // Mock analysis - in a real implementation, this would call an API
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Example analysis result
     setAnalysis({
-      topic: 'dynamic-programming',
-      category: 'Algorithm',
-      description: 'This code implements the Fibonacci sequence using dynamic programming.',
-      timeComplexity: 'O(n)',
-      spaceComplexity: 'O(n)',
+      topic: "dynamic-programming",
+      category: "Algorithm",
+      description:
+        "This code implements the Fibonacci sequence using dynamic programming.",
+      timeComplexity: "O(n)",
+      spaceComplexity: "O(n)",
       steps: [
         {
           lineNumbers: [1, 3],
-          code: 'function fibonacci(n) {\n  const dp = new Array(n + 1).fill(0);',
-          explanation: 'Initialize a dynamic programming array to store Fibonacci numbers. This allows us to avoid redundant calculations.'
+          code: "function fibonacci(n) {\n  const dp = new Array(n + 1).fill(0);",
+          explanation:
+            "Initialize a dynamic programming array to store Fibonacci numbers. This allows us to avoid redundant calculations.",
         },
         {
           lineNumbers: [4, 6],
-          code: '  dp[1] = 1;\n  dp[2] = 1;',
-          explanation: 'Set the base cases for the Fibonacci sequence. The first two numbers are 1.'
+          code: "  dp[1] = 1;\n  dp[2] = 1;",
+          explanation:
+            "Set the base cases for the Fibonacci sequence. The first two numbers are 1.",
         },
         {
           lineNumbers: [7, 10],
-          code: '  for(let i = 3; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }',
-          explanation: 'Iteratively calculate each Fibonacci number using the previous two numbers in the sequence.'
-        }
+          code: "  for(let i = 3; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }",
+          explanation:
+            "Iteratively calculate each Fibonacci number using the previous two numbers in the sequence.",
+        },
       ],
       optimizations: [
         {
-          title: 'Space Optimization',
-          description: 'We can optimize the space complexity by only storing the last two numbers instead of the entire array.',
-          currentCode: 'const dp = new Array(n + 1).fill(0);\nfor(let i = 3; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}',
-          suggestedCode: 'let prev2 = 1, prev1 = 1;\nfor(let i = 3; i <= n; i++) {\n  const curr = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = curr;\n}',
-          improvement: 'Reduces space complexity from O(n) to O(1)'
-        }
-      ]
-    })
-    setIsAnalyzing(false)
-    setActiveTab('analysis')
-  }
+          title: "Space Optimization",
+          description:
+            "We can optimize the space complexity by only storing the last two numbers instead of the entire array.",
+          currentCode:
+            "const dp = new Array(n + 1).fill(0);\nfor(let i = 3; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+          suggestedCode:
+            "let prev2 = 1, prev1 = 1;\nfor(let i = 3; i <= n; i++) {\n  const curr = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = curr;\n}",
+          improvement: "Reduces space complexity from O(n) to O(1)",
+        },
+      ],
+    });
+    setIsAnalyzing(false);
+    setActiveTab("analysis");
+  };
 
   const toggleDark = () => {
-    setIsDark(!isDark)
-    document.documentElement.classList.toggle('dark')
-  }
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle("dark");
+  };
 
   return (
-    <div className={`min-h-screen transition-colors ${isDark ? 'dark' : ''}`}>
+    <div className={`min-h-screen transition-colors ${isDark ? "dark" : ""}`}>
       <div className="container mx-auto p-4 md:p-6 lg:p-8 min-h-screen flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -83,12 +97,20 @@ export default function CodeAnalyzerPage() {
             <h1 className="text-2xl md:text-3xl font-bold">Code Analyzer</h1>
           </div>
           <Button variant="ghost" size="icon" onClick={toggleDark}>
-            {isDark ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
+            {isDark ? (
+              <SunIcon className="h-5 w-5" />
+            ) : (
+              <MoonIcon className="h-5 w-5" />
+            )}
           </Button>
         </div>
 
         {/* Main Content */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="flex-1 flex flex-col"
+        >
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="code" className="flex items-center gap-2">
               <Code2 className="h-4 w-4" />
@@ -107,13 +129,9 @@ export default function CodeAnalyzerPage() {
               </CardHeader>
               <CardContent className="flex-1 flex flex-col gap-4">
                 <div className="flex-1 min-h-[500px]">
-                  <CodeEditor 
-                    value={code} 
-                    onChange={setCode}
-                    height="100%"
-                  />
+                  <CodeEditor value={code} onChange={setCode} height="100vh" />
                 </div>
-                <Button 
+                <Button
                   onClick={analyzeCode}
                   disabled={!code.trim() || isAnalyzing}
                   className="w-full"
@@ -125,7 +143,7 @@ export default function CodeAnalyzerPage() {
                       Analyzing...
                     </>
                   ) : (
-                    'Analyze Code'
+                    "Analyze Code"
                   )}
                 </Button>
               </CardContent>
@@ -143,10 +161,15 @@ export default function CodeAnalyzerPage() {
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="space-y-4">
-                        <TopicBadge topic={analysis.topic} category={analysis.category} />
-                        <p className="text-sm text-muted-foreground">{analysis.description}</p>
+                        <TopicBadge
+                          topic={analysis.topic}
+                          category={analysis.category}
+                        />
+                        <p className="text-sm text-muted-foreground">
+                          {analysis.description}
+                        </p>
                       </div>
-                      
+
                       {/* Complexity Section */}
                       <div className="grid md:grid-cols-2 gap-4">
                         <Card className="bg-muted/50">
@@ -162,7 +185,9 @@ export default function CodeAnalyzerPage() {
                         <Card className="bg-muted/50">
                           <CardContent className="pt-6">
                             <div className="space-y-2">
-                              <h3 className="font-semibold">Space Complexity</h3>
+                              <h3 className="font-semibold">
+                                Space Complexity
+                              </h3>
                               <div className="font-mono text-xl bg-background p-3 rounded-md text-center">
                                 {analysis.spaceComplexity}
                               </div>
@@ -184,7 +209,8 @@ export default function CodeAnalyzerPage() {
                           <div key={index} className="space-y-3">
                             <div className="flex items-center gap-2">
                               <span className="text-sm font-medium text-muted-foreground">
-                                Lines {step.lineNumbers[0]}-{step.lineNumbers[1]}
+                                Lines {step.lineNumbers[0]}-
+                                {step.lineNumbers[1]}
                               </span>
                             </div>
                             <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
@@ -209,27 +235,41 @@ export default function CodeAnalyzerPage() {
                         {analysis.optimizations.map((optimization, index) => (
                           <div key={index} className="space-y-4">
                             <div>
-                              <h3 className="font-semibold text-lg">{optimization.title}</h3>
-                              <p className="text-sm text-muted-foreground">{optimization.description}</p>
+                              <h3 className="font-semibold text-lg">
+                                {optimization.title}
+                              </h3>
+                              <p className="text-sm text-muted-foreground">
+                                {optimization.description}
+                              </p>
                             </div>
-                            
+
                             <div className="grid gap-4">
                               <div className="space-y-2">
-                                <p className="text-sm font-medium">Current Implementation:</p>
+                                <p className="text-sm font-medium">
+                                  Current Implementation:
+                                </p>
                                 <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
-                                  <code className="text-sm">{optimization.currentCode}</code>
+                                  <code className="text-sm">
+                                    {optimization.currentCode}
+                                  </code>
                                 </pre>
                               </div>
                               <div className="space-y-2">
-                                <p className="text-sm font-medium">Suggested Implementation:</p>
+                                <p className="text-sm font-medium">
+                                  Suggested Implementation:
+                                </p>
                                 <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
-                                  <code className="text-sm">{optimization.suggestedCode}</code>
+                                  <code className="text-sm">
+                                    {optimization.suggestedCode}
+                                  </code>
                                 </pre>
                               </div>
                             </div>
 
                             <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 p-4 rounded-lg">
-                              <span>Improvement: {optimization.improvement}</span>
+                              <span>
+                                Improvement: {optimization.improvement}
+                              </span>
                             </div>
                           </div>
                         ))}
@@ -252,7 +292,9 @@ export default function CodeAnalyzerPage() {
                   ) : (
                     <div className="space-y-2">
                       <p className="font-medium">No analysis available</p>
-                      <p className="text-sm">Switch to the Code Editor tab to analyze your code</p>
+                      <p className="text-sm">
+                        Switch to the Code Editor tab to analyze your code
+                      </p>
                     </div>
                   )}
                 </div>
@@ -262,6 +304,5 @@ export default function CodeAnalyzerPage() {
         </Tabs>
       </div>
     </div>
-  )
+  );
 }
-
