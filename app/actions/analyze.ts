@@ -40,6 +40,7 @@ export async function getDetails(code: string) {
                       }[],
                       final_space_complexity_explanation: string
                     }
+                    IMPORTANT: Don't suggest the ways to optimize code. Just be concerned with the code given to you and analyze it.
                     IMPORTANT: Do not provide any extra or unnecessary details/information
                     IMPORTANT: Response should be in normal text. Don't bold italic etc
                     IMPORTANT: If something other than code is given. Return invalid for all keys`;
