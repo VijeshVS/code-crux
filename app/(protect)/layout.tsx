@@ -32,7 +32,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-bold mb-4">Enter API Key</h2>
             <p className="text-sm text-gray-600 mb-4">
-              Please enter your API key to continue. It will be securely stored in your browser.
+              Please enter your GEMINI API key to continue. It will be securely stored in your browser.
             </p>
             <input
               type="text"
